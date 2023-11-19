@@ -1,18 +1,20 @@
-const url = require('url')
+async function fetch (url, options) {
+  let protocol = null
 
-function fetch (iri, options) {
-  const protocol = url.parse(iri).protocol.split(':').shift()
-
-  if (protocol in this.protocols) {
-    return this.protocols[protocol](iri, options)
+  if (/^[a-z]+:/.test(url)) {
+    protocol = new URL(url).protocol.slice(0, -1)
   }
 
-  return Promise.reject(new Error('unknown protocol'))
+  if (protocol in this.protocols) {
+    return this.protocols[protocol](url, options)
+  }
+
+  throw new Error(`unknown protocol: ${protocol}`)
 }
 
 function factory (protocols) {
-  const instance = (iri, options) => {
-    return fetch.call(instance, iri, options)
+  const instance = (url, options) => {
+    return fetch.call(instance, url, options)
   }
 
   instance.protocols = protocols
@@ -20,4 +22,4 @@ function factory (protocols) {
   return instance
 }
 
-module.exports = factory
+export default factory
