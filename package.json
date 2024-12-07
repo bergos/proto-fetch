@@ -27,7 +27,7 @@
   "devDependencies": {
     "c8": "^8.0.1",
     "file-fetch": "^2.0.0",
-    "mocha": "^10.2.0",
+    "mocha": "^11.0.1",
     "nodeify-fetch": "^3.1.0",
     "stricter-standard": "^0.3.0"
   }
